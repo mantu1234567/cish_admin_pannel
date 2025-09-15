@@ -30,7 +30,7 @@ function App() {
   return (
     <Router>
       <div className="flex justify-between">
-        <div>
+        <div className="bg-[#1B5E20]">
           <Sidebar>
             <SidebarItem
               icon={<LayoutDashboard size={20} />}

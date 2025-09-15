@@ -9,9 +9,9 @@ export default function Sidebar({ children }) {
 
   return (
     <>
-      <div className="h-screen">
-        <nav className="h-full flex flex-col border-r shadow-sm bg-[#1B5E20]">
-          <div className="p-4 pb-2 flex justify-between items-center">
+      <div className="h-screen ">
+        <nav className="h-full flex flex-col border-r shadow-sm">
+          <div className="p-4 pb-2 flex justify-between items-center mt-8">
             <button
               onClick={() => setExpanded((curr) => !curr)}
               className="p-1.5 rounded-lg bg-gray-50 hover:bg-gray-100"

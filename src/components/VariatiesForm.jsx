@@ -10,7 +10,7 @@ import HeaderSection from "./HeaderSection";
 import { useState } from "react";
 const VariatiesForm = () => {
   const { state, dispatch } = useVarieties();
-const [formData,setFormData ] = useState([])
+  const [formData, setFormData] = useState([]);
   const handlePublish = async () => {
     try {
       await publishVariety(state);
@@ -28,10 +28,9 @@ const [formData,setFormData ] = useState([])
 
   const title = "WHAT IS YOUR NEW VARIETIES POST";
   const description =
-    "Upload Your Media. The First Image Will Be Used As The Thumbnail In Feeds. " +
-    "Drug And Drop Up To 3 Image/Video 10 Create A Mutabos";
+    "Upload Your Media. The First Image Will Be Used As The Thumbnail In Feeds. Drug And Drop Up To 3 Image/Video 10 Create A Mutabos";
   return (
-    <div className="mx-auto p-6 bg-white shadow rounded">
+    <div className="mx-auto pl-12 pr-36 py-24 bg-white">
       <HeaderSection
         breadcrumb={breadcrumb}
         title={title}
@@ -46,6 +45,10 @@ const [formData,setFormData ] = useState([])
         }
         placeholder="Example: CISH-METWASH"
       />
+       <FileUpload
+        files={formData.files}
+        onChange={(files) => handleFieldChange("files", files)}
+      />
       <TextArea
         label="Varieties Details"
         value={state.details}
@@ -54,10 +57,7 @@ const [formData,setFormData ] = useState([])
         }
         placeholder="Enter detailed description"
       />
-      <FileUpload
-        files={formData.files}
-        onChange={(files) => handleFieldChange("files", files)}
-      />
+     
       <SelectDropdown
         label="License Fee"
         value={state.licenseFee}

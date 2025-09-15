@@ -1,9 +1,8 @@
-import React from 'react';
+import React from "react";
 
 const HeaderSection = ({ breadcrumb, title, description }) => {
   return (
-    <div className="p-6 bg-white rounded-md">
-
+    <div className=" bg-white rounded-md">
       {/* Breadcrumb */}
       <div className="text-sm text-gray-600 mb-6">
         {breadcrumb.map((item, index) => (
@@ -21,7 +20,7 @@ const HeaderSection = ({ breadcrumb, title, description }) => {
       </div>
 
       {/* Buttons */}
-      <div className="flex justify-end space-x-4">
+      {/* <div className="flex justify-end space-x-4">
         <button className="px-4 py-2 border border-gray-300 text-gray-800 rounded hover:bg-gray-100">
           Cancel
         </button>
@@ -29,14 +28,18 @@ const HeaderSection = ({ breadcrumb, title, description }) => {
         <button className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">
           Publish
         </button>
-      </div>
+      </div> */}
 
       {/* Dynamic Title & Description */}
       <div className="mt-10 text-center">
-        <h1 className="text-2xl font-bold text-green-700">{title}</h1>
-        <p className="mt-2 text-gray-600">{description}</p>
+        <h1 className="text-[#1B5E20] font-noto text-[25px] leading-[156.5%] font-bold">
+          {title}
+        </h1>
+        <p className="text-[#626262] font-noto text-[18px] leading-[156.5%]">
+          {description}
+        </p>
+        <hr className="mt-4 mb-8 border-gray-300" />
       </div>
-
     </div>
   );
 };
