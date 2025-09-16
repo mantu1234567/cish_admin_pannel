@@ -1,4 +1,12 @@
 
-export default function TechnologiesPage() {
-  return <h1 className="text-2xl font-bold">Technologies Page</h1>;
-}
+import TechnologiesForm from '../components/TechnologiesForm';
+import { VarietiesProvider } from '../context/ApiContext';
+const TechnologiesPage = () => (
+  <VarietiesProvider>
+    <div className="min-h-screen bg-gray-100">
+      <TechnologiesForm />
+    </div>
+  </VarietiesProvider>
+);
+
+export default TechnologiesPage;

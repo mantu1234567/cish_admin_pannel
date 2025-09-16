@@ -1,5 +1,5 @@
 import VariatiesForm from '../components/VariatiesForm';
-import { VarietiesProvider } from '../context/VarietiesContext';
+import { VarietiesProvider } from '../context/ApiContext';
 
 const VarietiesPage = () => (
   <VarietiesProvider>

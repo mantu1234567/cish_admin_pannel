@@ -10,36 +10,36 @@ import HeaderSection from "./HeaderSection";
 import { useState } from "react";
 import LabeledSelect from "./LabeledSelect";
 import { useApiManager } from "../hooks/useApiManager";
-const VariatiesForm = () => {
+const TechnologiesForm = () => {
   const { state, dispatch } = useVarieties();
   const [formData, setFormData] = useState([]);
   const { createVarietiesItem } = useApiManager();
-  const handlePublish = () => {
-    const payload = { varieties: state };
+const handlePublish = () => {
+    const payload = { Technologies: state };
+  createVarietiesItem.mutate(payload, {
+    onSuccess: () => {
+      dispatch({ type: 'RESET_FIELDS' });
+      alert('Published successfully');
+    },
+    onError: (error) => {
+      console.error('Publish error:', error);
+      dispatch({ type: 'RESET_FIELDS' });
+      alert('Publish failed');
+    },
+  });
+};
 
-    createVarietiesItem.mutate(payload, {
-      onSuccess: () => {
-        dispatch({ type: "RESET_FIELDS" });
-        alert("Published successfully");
-      },
-      onError: (error) => {
-        console.error(error);
-        dispatch({ type: "RESET_FIELDS" });
-        alert("Publish failed");
-      },
-    });
-  };
   const breadcrumb = [
     { label: "Home", link: "/" },
-    { label: "Varieties", link: "/varieties" },
-    { label: "Add Varieties" },
+    { label: "Technologies", link: "/technologies" },
+    { label: "Add Technologies" },
   ];
 
-  const title = "WHAT IS YOUR NEW VARIETIES POST";
+  const title = "WHAT IS YOUR NEW TECHNOLOGIES POST";
   const description =
     "Upload Your Media. The First Image Will Be Used As The Thumbnail In Feeds. Drug And Drop Up To 3 Image/Video 10 Create A Mutabos";
   return (
-    <div className="mx-auto pl-12 pr-36 py-24 bg-white">
+    <div className="mx-auto pl-12 pr-24 py-24 bg-white">
       <HeaderSection
         breadcrumb={breadcrumb}
         title={title}
@@ -47,7 +47,7 @@ const VariatiesForm = () => {
       />
 
       <InputField
-        label="VARIETIES TITLE"
+        label="TECHNOLOGIE TITLE"
         value={state.title}
         onChange={(value) =>
           dispatch({ type: "SET_FIELD", field: "title", value })
@@ -59,7 +59,7 @@ const VariatiesForm = () => {
         onChange={(files) => handleFieldChange("files", files)}
       />
       <TextArea
-        label="VARIETIES DETAILS"
+        label="TECHNOLOGIE DETAILS"
         value={state.details}
         onChange={(value) =>
           dispatch({ type: "SET_FIELD", field: "details", value })
@@ -90,6 +90,7 @@ const VariatiesForm = () => {
           { label: "Global Only", value: "global" },
         ]}
       />
+      <div className="font-noto font-semibold text-[18px] text-[#000000] leading-[156.5%] mb-1" >LICENSSING TERM</div>
       <div className="flex flex-row gap-4">
         <div className="w-1/2">
           <InputField
@@ -188,4 +189,4 @@ const VariatiesForm = () => {
   );
 };
 
-export default VariatiesForm;
+export default TechnologiesForm;
