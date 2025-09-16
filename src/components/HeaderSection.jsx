@@ -8,11 +8,11 @@ const HeaderSection = ({ breadcrumb, title, description }) => {
         {breadcrumb.map((item, index) => (
           <span key={index}>
             {item.link ? (
-              <a href={item.link} className="text-green-600 hover:underline">
+              <a href={item.link} className="text-[#777070] hover:underline">
                 {item.label}
               </a>
             ) : (
-              <span className="text-gray-900 font-semibold">{item.label}</span>
+              <span className="text-[#1B5E20] font-semibold">{item.label}</span>
             )}
             {index < breadcrumb.length - 1 && <span className="mx-1">/</span>}
           </span>

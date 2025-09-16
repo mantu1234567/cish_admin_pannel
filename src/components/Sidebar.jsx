@@ -1,6 +1,6 @@
 import { ChevronFirst, ChevronLast } from "lucide-react";
 import { createContext, useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link,useLocation  } from "react-router-dom";
 
 const SidebarContext = createContext();
 
@@ -29,15 +29,17 @@ export default function Sidebar({ children }) {
   );
 }
 
-export function SidebarItem({ icon, text, active, to }) {
+export function SidebarItem({ icon, text, to }) {
   const { expanded } = useContext(SidebarContext);
+  const location = useLocation();
+  const isActive = location.pathname === to;
 
   return (
     <li>
       <Link
         to={to}
         className={`flex items-center py-2 px-3 my-1 font-medium rounded-md transition-colors group ${
-          active
+          isActive
             ? "bg-[#67B96D] text-[#B1AFAF]"
             : "hover:bg-[#67B96D] text-[#B1AFAF]"
         }`}
@@ -61,4 +63,4 @@ export function SidebarItem({ icon, text, active, to }) {
       </Link>
     </li>
   );
-}
+};

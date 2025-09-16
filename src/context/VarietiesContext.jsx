@@ -19,10 +19,22 @@ const varietiesReducer = (state, action) => {
       return { ...state, [action.field]: action.value };
     case 'SET_FILES':
       return { ...state, files: action.files };
+    case 'RESET_FIELDS':
+      return {
+        title: '',
+        details: '',
+        licenseFeeGlobal: '',
+        licenseFeeDomestic: '',
+        royalty: '',
+        licensingTerritory: '',
+        targetCustomers: '',
+        files: [],
+      };
     default:
       return state;
   }
 };
+
 
 export const VarietiesProvider = ({ children }) => {
   const [state, dispatch] = useReducer(varietiesReducer, initialState);

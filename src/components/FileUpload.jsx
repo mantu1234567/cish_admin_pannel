@@ -24,7 +24,7 @@ const FileUpload = ({ files, onChange }) => {
   return (
     <div className="mb-4">
       <label className="font-noto font-semibold text-[18px] text-[#000000] leading-[156.5%] mb-1">
-        Upload Files
+        UPLOAD FILES
       </label>
       <div
         className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center bg-gray-50"
@@ -34,9 +34,9 @@ const FileUpload = ({ files, onChange }) => {
         <img
           src="public/upload 1.svg"
           alt="Local Image"
-          className="mx-auto mb-4"
+          className="mx-auto"
         />{" "}
-        <h1 className="text-[#000000] font-noto text-[27px] leading-[156.5%]">
+        <h1 className="text-[#000000] font-noto text-[27px] leading-[156.5%] font-bold">
           Drop File Here
         </h1>
         <h1 className="mb-2 text-[#BAB9B9] font-noto text-[19px] leading-[156.6%]">
@@ -50,7 +50,7 @@ const FileUpload = ({ files, onChange }) => {
           Upload File
         </Button>
         <p className="text-sm text-gray-500 mb-4">
-          only PNG, JPG and PDF files
+          Only PNG, JPG and PDF files
           <br />
           Are Supported
         </p>

@@ -8,18 +8,27 @@ import { useVarieties } from "../context/VarietiesContext";
 import { publishVariety } from "../api/varietiesApi";
 import HeaderSection from "./HeaderSection";
 import { useState } from "react";
+import LabeledSelect from "./LabeledSelect";
+import { useApiManager } from "../hooks/useApiManager";
 const VariatiesForm = () => {
   const { state, dispatch } = useVarieties();
   const [formData, setFormData] = useState([]);
-  const handlePublish = async () => {
-    try {
-      await publishVariety(state);
-      alert("Published successfully");
-    } catch (error) {
+  const { createVarietiesItem } = useApiManager();
+  const handlePublish = () => {
+  console.log(state);
+  createVarietiesItem.mutate(state, {
+    onSuccess: () => {
+      dispatch({ type: 'RESET_FIELDS' });
+      alert('Published successfully');
+
+    },
+    onError: (error) => {
       console.error(error);
-      alert("Publish failed");
-    }
-  };
+      dispatch({ type: 'RESET_FIELDS' });
+      alert('Publish failed');
+    },
+  });
+};
   const breadcrumb = [
     { label: "Home", link: "/" },
     { label: "Varieties", link: "/varieties" },
@@ -38,26 +47,37 @@ const VariatiesForm = () => {
       />
 
       <InputField
-        label="Varieties Title"
+        label="VARIETIES TITLE"
         value={state.title}
         onChange={(value) =>
           dispatch({ type: "SET_FIELD", field: "title", value })
         }
         placeholder="Example: CISH-METWASH"
       />
-       <FileUpload
+      <FileUpload
         files={formData.files}
         onChange={(files) => handleFieldChange("files", files)}
       />
       <TextArea
-        label="Varieties Details"
+        label="VARIETIES DETAILS"
         value={state.details}
         onChange={(value) =>
           dispatch({ type: "SET_FIELD", field: "details", value })
         }
         placeholder="Enter detailed description"
       />
-     
+      {/* <LabeledSelect
+        label="Royalty"
+        value={state.royalty}
+        onChange={(value) =>
+          dispatch({ type: "SET_FIELD", field: "royalty", value })
+        }
+        options={[
+          { label: "Option 1", value: "option1" },
+          { label: "Option 2", value: "option2" },
+        ]}
+      /> */}
+
       <SelectDropdown
         label="License Fee"
         value={state.licenseFee}
@@ -70,7 +90,7 @@ const VariatiesForm = () => {
           { label: "Global Only", value: "global" },
         ]}
       />
-      <div className="flex flex-row gap-4 overflow-x-auto">
+      <div className="flex flex-row gap-4">
         <div className="w-1/2">
           <InputField
             label="For Global Marketing"
@@ -78,7 +98,7 @@ const VariatiesForm = () => {
             onChange={(value) =>
               dispatch({ type: "SET_FIELD", field: "licenseFeeGlobal", value })
             }
-            placeholder="e.g. Rs.25,000 + taxes"
+            placeholder="Example: Rs.25,00,000 Applicable Taxes"
           />
         </div>
         <div className="w-1/2">
@@ -92,32 +112,40 @@ const VariatiesForm = () => {
                 value,
               })
             }
-            placeholder="25% rebate on the license fee for MSME firms"
+            placeholder="25% Rebate On The License Fee For MSME Firms"
           />
         </div>
       </div>
-
-      <InputField
-        label="For Domestic Marketing"
-        value={state.licenseFeeDomestic}
-        onChange={(value) =>
-          dispatch({ type: "SET_FIELD", field: "licenseFeeDomestic", value })
-        }
-        placeholder="e.g. Rs.25,000 + taxes"
-      />
-      <InputField
-        label="For Farms"
-        value={state.forFarmsDomesticMarket}
-        onChange={(value) =>
-          dispatch({
-            type: "SET_FIELD",
-            field: "forFarmsDomesticMarket",
-            value,
-          })
-        }
-        placeholder="25% rebate on the license fee for MSME firms"
-      />
-
+      <div className="flex flex-row gap-4">
+        <div className="w-1/2">
+          <InputField
+            label="For Domestic Marketing"
+            value={state.licenseFeeDomestic}
+            onChange={(value) =>
+              dispatch({
+                type: "SET_FIELD",
+                field: "licenseFeeDomestic",
+                value,
+              })
+            }
+            placeholder="Example: Rs.25,00,000 Applicable Taxes"
+          />
+        </div>
+        <div className="w-1/2">
+          <InputField
+            label="For Farms"
+            value={state.forFarmsDomesticMarket}
+            onChange={(value) =>
+              dispatch({
+                type: "SET_FIELD",
+                field: "forFarmsDomesticMarket",
+                value,
+              })
+            }
+            placeholder="25% Rebate On The License Fee For MSME Firms"
+          />
+        </div>
+      </div>
       <InputField
         label="Royalty"
         value={state.royalty}
@@ -141,7 +169,7 @@ const VariatiesForm = () => {
       />
 
       <SelectDropdown
-        label="Target Customers"
+        label="TARGET CUSTOMERS"
         value={state.targetCustomers}
         onChange={(value) =>
           dispatch({ type: "SET_FIELD", field: "targetCustomers", value })
@@ -151,10 +179,11 @@ const VariatiesForm = () => {
           { label: "Farms", value: "farms" },
         ]}
       />
-
-      <Button onClick={handlePublish} className="mt-4">
-        Publish
-      </Button>
+      <div className="flex justify-end">
+        <Button onClick={handlePublish} className="mt-4">
+          Publish
+        </Button>
+      </div>
     </div>
   );
 };
