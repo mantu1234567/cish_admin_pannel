@@ -8,27 +8,34 @@ import { useVarieties } from "../context/ApiContext";
 import { publishVariety } from "../api/varietiesApi";
 import HeaderSection from "./HeaderSection";
 import { useState } from "react";
-import LabeledSelect from "./LabeledSelect";
 import { useApiManager } from "../hooks/useApiManager";
+import RoyaltyDropdown from "./RoyaltyDropdown ";
 const TechnologiesForm = () => {
   const { state, dispatch } = useVarieties();
   const [formData, setFormData] = useState([]);
   const { createVarietiesItem } = useApiManager();
-const handlePublish = () => {
+  const handlePublish = () => {
     const payload = { Technologies: state };
-  createVarietiesItem.mutate(payload, {
-    onSuccess: () => {
-      dispatch({ type: 'RESET_FIELDS' });
-      alert('Published successfully');
-    },
-    onError: (error) => {
-      console.error('Publish error:', error);
-      dispatch({ type: 'RESET_FIELDS' });
-      alert('Publish failed');
-    },
-  });
-};
-
+    createVarietiesItem.mutate(payload, {
+      onSuccess: () => {
+        dispatch({ type: "RESET_FIELDS" });
+        alert("Published successfully");
+      },
+      onError: (error) => {
+        console.error("Publish error:", error);
+        dispatch({ type: "RESET_FIELDS" });
+        alert("Publish failed");
+      },
+    });
+  };
+  const handleFieldChange = (field, value) => {
+    console.log(field, value);
+    setFormData((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
+  console.log(formData);
   const breadcrumb = [
     { label: "Home", link: "/" },
     { label: "Technologies", link: "/technologies" },
@@ -66,17 +73,6 @@ const handlePublish = () => {
         }
         placeholder="Enter detailed description"
       />
-      {/* <LabeledSelect
-        label="Royalty"
-        value={state.royalty}
-        onChange={(value) =>
-          dispatch({ type: "SET_FIELD", field: "royalty", value })
-        }
-        options={[
-          { label: "Option 1", value: "option1" },
-          { label: "Option 2", value: "option2" },
-        ]}
-      /> */}
 
       <SelectDropdown
         label="License Fee"
@@ -90,7 +86,9 @@ const handlePublish = () => {
           { label: "Global Only", value: "global" },
         ]}
       />
-      <div className="font-noto font-semibold text-[18px] text-[#000000] leading-[156.5%] mb-1" >LICENSSING TERM</div>
+      <div className="font-noto font-semibold text-[18px] text-[#000000] leading-[156.5%] mb-1">
+        LICENSSING TERM
+      </div>
       <div className="flex flex-row gap-4">
         <div className="w-1/2">
           <InputField
@@ -147,13 +145,19 @@ const handlePublish = () => {
           />
         </div>
       </div>
-      <InputField
-        label="Royalty"
-        value={state.royalty}
+      <RoyaltyDropdown
+        fieldLabel="Royalty"
+        label="On Net-Invoice Value"
+        value={state.royaltyType}
         onChange={(value) =>
-          dispatch({ type: "SET_FIELD", field: "royalty", value })
+          dispatch({ type: "SET_FIELD", field: "royaltyType", value })
         }
-        placeholder="e.g. 10%"
+        options={[
+          { label: "Net-Invoice Value", value: "net-invoice" },
+          { label: "Gross Revenue", value: "gross-revenue" },
+          { label: "Net Revenue", value: "net-revenue" },
+          { label: "Fixed Amount", value: "fixed-amount" },
+        ]}
       />
 
       <SelectDropdown

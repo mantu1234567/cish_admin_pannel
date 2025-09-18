@@ -5,18 +5,16 @@ import Button from "./Button";
 import FileUpload from "./FileUpload";
 
 import { useVarieties } from "../context/ApiContext";
-import { publishVariety } from "../api/varietiesApi";
 import HeaderSection from "./HeaderSection";
 import { useState } from "react";
-import LabeledSelect from "./LabeledSelect";
 import { useApiManager } from "../hooks/useApiManager";
+import RoyaltyDropdown from "./RoyaltyDropdown ";
 const VariatiesForm = () => {
   const { state, dispatch } = useVarieties();
   const [formData, setFormData] = useState([]);
   const { createVarietiesItem } = useApiManager();
   const handlePublish = () => {
     const payload = { varieties: state };
-
     createVarietiesItem.mutate(payload, {
       onSuccess: () => {
         dispatch({ type: "RESET_FIELDS" });
@@ -66,17 +64,6 @@ const VariatiesForm = () => {
         }
         placeholder="Enter detailed description"
       />
-      {/* <LabeledSelect
-        label="Royalty"
-        value={state.royalty}
-        onChange={(value) =>
-          dispatch({ type: "SET_FIELD", field: "royalty", value })
-        }
-        options={[
-          { label: "Option 1", value: "option1" },
-          { label: "Option 2", value: "option2" },
-        ]}
-      /> */}
 
       <SelectDropdown
         label="License Fee"
@@ -146,13 +133,19 @@ const VariatiesForm = () => {
           />
         </div>
       </div>
-      <InputField
-        label="Royalty"
-        value={state.royalty}
+      <RoyaltyDropdown
+        fieldLabel="Royalty"
+        label="On Net-Invoice Value"
+        value={state.royaltyType}
         onChange={(value) =>
-          dispatch({ type: "SET_FIELD", field: "royalty", value })
+          dispatch({ type: "SET_FIELD", field: "royaltyType", value })
         }
-        placeholder="e.g. 10%"
+        options={[
+          { label: "Net-Invoice Value", value: "net-invoice" },
+          { label: "Gross Revenue", value: "gross-revenue" },
+          { label: "Net Revenue", value: "net-revenue" },
+          { label: "Fixed Amount", value: "fixed-amount" },
+        ]}
       />
 
       <SelectDropdown

@@ -31,11 +31,7 @@ const FileUpload = ({ files, onChange }) => {
         onDrop={handleDrop}
         onDragOver={handleDragOver}
       >
-        <img
-          src="public/upload 1.svg"
-          alt="Local Image"
-          className="mx-auto"
-        />{" "}
+        <img src="public/upload 1.svg" alt="Local Image" className="mx-auto" />{" "}
         <h1 className="text-[#000000] font-noto text-[27px] leading-[156.5%] font-bold">
           Drop File Here
         </h1>
@@ -78,9 +74,7 @@ const FileUpload = ({ files, onChange }) => {
               <button
                 onClick={() => removeFile(index)}
                 className="text-red-500 hover:text-red-700"
-              >
-                <X size={16} />
-              </button>
+              ></button>
             </div>
           ))}
         </div>
