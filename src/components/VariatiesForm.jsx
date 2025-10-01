@@ -9,6 +9,7 @@ import HeaderSection from "./HeaderSection";
 import { useState } from "react";
 import { useApiManager } from "../hooks/useApiManager";
 import RoyaltyDropdown from "./RoyaltyDropdown ";
+import RoyaltyField from "./RoyaltyDropdown ";
 const VariatiesForm = () => {
   const { state, dispatch } = useVarieties();
   const [formData, setFormData] = useState([]);
@@ -35,7 +36,7 @@ const VariatiesForm = () => {
 
   const title = "WHAT IS YOUR NEW VARIETIES POST";
   const description =
-    "Upload Your Media. The First Image Will Be Used As The Thumbnail In Feeds. Drug And Drop Up To 3 Image/Video 10 Create A Mutabos";
+    "Upload Your Media. The First Image Will Be Used As The Thumbnail In Feeds. Drag And Drop Up To 3 Image/Video 10 Create A Mutabos";
   return (
     <div className="mx-auto pl-12 pr-12 py-24 bg-white">
       <HeaderSection
@@ -133,20 +134,13 @@ const VariatiesForm = () => {
           />
         </div>
       </div>
-      <RoyaltyDropdown
-        fieldLabel="Royalty"
-        label="On Net-Invoice Value"
-        value={state.royaltyType}
-        onChange={(value) =>
-          dispatch({ type: "SET_FIELD", field: "royaltyType", value })
-        }
-        options={[
-          { label: "Net-Invoice Value", value: "net-invoice" },
-          { label: "Gross Revenue", value: "gross-revenue" },
-          { label: "Net Revenue", value: "net-revenue" },
-          { label: "Fixed Amount", value: "fixed-amount" },
-        ]}
-      />
+          <RoyaltyField
+            fieldLabel="Royalty"
+            value={state.royalty}
+            onChange={(value) =>
+              dispatch({ type: "SET_FIELD", field: "royalty", value })
+            }
+          />
 
       <SelectDropdown
         label="Licensing Territory"

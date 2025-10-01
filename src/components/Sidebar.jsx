@@ -40,17 +40,18 @@ export function SidebarItem({ icon, text, to }) {
         to={to}
         className={`flex items-center py-2 px-3 my-1 font-medium rounded-md transition-colors group ${
           isActive
-            ? "bg-[#67B96D] text-[#B1AFAF]"
-            : "hover:bg-[#67B96D] text-[#B1AFAF]"
+            ? "bg-[#67B96D] text-white"
+            : "hover:bg-[#67B96D] text-white"
         }`}
       >
         {icon}
         <span
           className={`overflow-hidden transition-all ${
             expanded ? "w-52 ml-3" : "w-0"
-          } text-[#B1AFAF]`}
+          } text-white`}
         >
           {text}
+
         </span>
 
         {!expanded && (

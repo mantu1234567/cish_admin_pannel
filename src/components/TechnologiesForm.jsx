@@ -10,24 +10,66 @@ import HeaderSection from "./HeaderSection";
 import { useState } from "react";
 import { useApiManager } from "../hooks/useApiManager";
 import RoyaltyDropdown from "./RoyaltyDropdown ";
+import RoyaltyField from "./RoyaltyDropdown ";
 const TechnologiesForm = () => {
   const { state, dispatch } = useVarieties();
   const [formData, setFormData] = useState([]);
   const { createVarietiesItem } = useApiManager();
-  const handlePublish = () => {
-    const payload = { Technologies: state };
-    createVarietiesItem.mutate(payload, {
-      onSuccess: () => {
-        dispatch({ type: "RESET_FIELDS" });
-        alert("Published successfully");
-      },
-      onError: (error) => {
-        console.error("Publish error:", error);
-        dispatch({ type: "RESET_FIELDS" });
-        alert("Publish failed");
-      },
-    });
+ const handlePublish = () => {
+  const payload = {
+    name: state.title || null,
+    category: "TECHNOLOGY",
+    shortDescription: state.details || null,
+    techDetails: {
+      yieldKgPerTree: state.yieldKgPerTree || null,
+      fruitWeightG: state.fruitWeightG || null,
+      tssBrix: state.tssBrix || null,
+      shelfLifeDays: state.shelfLifeDays || null,
+    },
+    icNo: state.icNumber || null,
+    yearDevelopment: state.yearOfDevelopment || null,
+    yearRelease: state.yearOfRelease || null,
+    yearCommercialization: state.yearOfCommercialization || null,
+    targetCustomers: state.targetCustomers
+      ? [state.targetCustomers]
+      : null,
+    inventors: state.inventors
+      ? [
+          {
+            fullName: state.inventors || null,
+            email: state.inventorEmail || null,
+            affiliation: state.inventorAffiliation || null,
+          },
+        ]
+      : null,
+    licensingTerms: state.natureOfLicense
+      ? [
+          {
+            natureOfLicense: state.natureOfLicense || null,
+            durationYears: state.licenseDuration || null,
+            territory: state.licensingTerritory || null,
+            licenseFeeCents: state.licenseFee || null,
+            rebatePercent: state.rebatePercent || null,
+            royalty: state.royalty || null,
+            notes: state.licenseNotes || null,
+          },
+        ]
+      : null,
   };
+
+  createVarietiesItem.mutate(payload, {
+    onSuccess: () => {
+      dispatch({ type: "RESET_FIELDS" });
+      alert("Published successfully");
+    },
+    onError: (error) => {
+      console.error("Publish error:", error);
+      dispatch({ type: "RESET_FIELDS" });
+      alert("Publish failed");
+    },
+  });
+};
+
   const handleFieldChange = (field, value) => {
     console.log(field, value);
     setFormData((prev) => ({
@@ -44,7 +86,7 @@ const TechnologiesForm = () => {
 
   const title = "WHAT IS YOUR NEW TECHNOLOGIES POST";
   const description =
-    "Upload Your Media. The First Image Will Be Used As The Thumbnail In Feeds. Drug And Drop Up To 3 Image/Video 10 Create A Mutabos";
+    "Upload Your Media. The First Image Will Be Used As The Thumbnail In Feeds. Drag And Drop Up To 3 Image/Video 10 Create A Mutabos";
   return (
     <div className="mx-auto pl-12 pr-24 py-24 bg-white">
       <HeaderSection
@@ -65,6 +107,110 @@ const TechnologiesForm = () => {
         files={formData.files}
         onChange={(files) => handleFieldChange("files", files)}
       />
+      <div className="flex flex-row gap-4">
+        <div className="w-1/2">
+          <InputField
+            label="Name of Inventor(s)/Developer(s)"
+            value={state.inventors}
+            onChange={(value) =>
+              dispatch({ type: "SET_FIELD", field: "inventors", value })
+            }
+            placeholder="Example: Dr. Shailendra Rajan, Dr. S. S. Negi, Dr. Ram Kumar"
+          />
+        </div>
+        <div className="w-1/2">
+          <InputField
+            label="Collaborator(s)"
+            value={state.collaborators}
+            onChange={(value) =>
+              dispatch({ type: "SET_FIELD", field: "collaborators", value })
+            }
+            placeholder="Example: Dr. R. P. Shukla, Dr. B. K. Pandey"
+          />
+        </div>
+      </div>
+
+      <div className="flex flex-row gap-4">
+        <div className="w-1/2">
+          <InputField
+            label="Maintainer Inventor"
+            value={state.maintainerInventor}
+            onChange={(value) =>
+              dispatch({
+                type: "SET_FIELD",
+                field: "maintainerInventor",
+                value,
+              })
+            }
+            placeholder="Example: Dr. Ashish Yadav"
+          />
+        </div>
+        <div className="w-1/2">
+          <InputField
+            label="Year of Development"
+            value={state.yearOfDevelopment}
+            onChange={(value) =>
+              dispatch({ type: "SET_FIELD", field: "yearOfDevelopment", value })
+            }
+            placeholder="Example: 2000"
+          />
+        </div>
+      </div>
+
+      <div className="flex flex-row gap-4">
+        <div className="w-1/2">
+          <InputField
+            label="Year of Commercialization"
+            value={state.yearOfCommercialization}
+            onChange={(value) =>
+              dispatch({
+                type: "SET_FIELD",
+                field: "yearOfCommercialization",
+                value,
+              })
+            }
+            placeholder="Example: 2024"
+          />
+        </div>
+        <div className="w-1/2">
+          <InputField
+            label="Year of Release"
+            value={state.yearOfRelease}
+            onChange={(value) =>
+              dispatch({ type: "SET_FIELD", field: "yearOfRelease", value })
+            }
+            placeholder="Example: 2024 (SVRC), 2024 (CVRC)"
+          />
+        </div>
+      </div>
+
+      <div className="flex flex-row gap-4">
+        <div className="w-1/2">
+          <InputField
+            label="PPVFRA Breeder’s right registration"
+            value={state.ppvfraRegistration}
+            onChange={(value) =>
+              dispatch({
+                type: "SET_FIELD",
+                field: "ppvfraRegistration",
+                value,
+              })
+            }
+            placeholder="Example: REG/2016/375"
+          />
+        </div>
+        <div className="w-1/2">
+          <InputField
+            label="IC No."
+            value={state.icNumber}
+            onChange={(value) =>
+              dispatch({ type: "SET_FIELD", field: "icNumber", value })
+            }
+            placeholder="Example: 0640186"
+          />
+        </div>
+      </div>
+
       <TextArea
         label="TECHNOLOGIE DETAILS"
         value={state.details}
@@ -73,117 +219,95 @@ const TechnologiesForm = () => {
         }
         placeholder="Enter detailed description"
       />
-
-      <SelectDropdown
-        label="License Fee"
-        value={state.licenseFee}
-        onChange={(value) =>
-          dispatch({ type: "SET_FIELD", field: "licenseFee", value })
-        }
-        options={[
-          { label: "Both", value: "both" },
-          { label: "India Only", value: "india" },
-          { label: "Global Only", value: "global" },
-        ]}
-      />
-      <div className="font-noto font-semibold text-[18px] text-[#000000] leading-[156.5%] mb-1">
-        LICENSSING TERM
+      <div className="font-noto font-semibold text-[18px] text-[#000000] leading-[156.5%] mb-3">
+        LICENSING TERMS
       </div>
-      <div className="flex flex-row gap-4">
+
+      <div className="flex flex-row gap-4 mb-4">
         <div className="w-1/2">
           <InputField
-            label="For Global Marketing"
-            value={state.licenseFeeGlobal}
+            label="Nature of License"
+            value={state.natureOfLicense}
             onChange={(value) =>
-              dispatch({ type: "SET_FIELD", field: "licenseFeeGlobal", value })
+              dispatch({ type: "SET_FIELD", field: "natureOfLicense", value })
             }
-            placeholder="Example: Rs.25,00,000 Applicable Taxes"
+            placeholder="Example: Non-Exclusive"
           />
         </div>
         <div className="w-1/2">
           <InputField
-            label="For Farms"
-            value={state.forFarmsGlobalMarket}
+            label="Duration"
+            value={state.licenseDuration}
             onChange={(value) =>
-              dispatch({
-                type: "SET_FIELD",
-                field: "forFarmsGlobalMarket",
-                value,
-              })
+              dispatch({ type: "SET_FIELD", field: "licenseDuration", value })
             }
-            placeholder="25% Rebate On The License Fee For MSME Firms"
+            placeholder="Example: 7 Years"
           />
         </div>
       </div>
-      <div className="flex flex-row gap-4">
+
+      <div className="flex flex-row gap-4 mb-4">
         <div className="w-1/2">
-          <InputField
-            label="For Domestic Marketing"
-            value={state.licenseFeeDomestic}
+          <SelectDropdown
+            label="Licensing Territory"
+            value={state.licensingTerritory}
             onChange={(value) =>
               dispatch({
                 type: "SET_FIELD",
-                field: "licenseFeeDomestic",
+                field: "licensingTerritory",
                 value,
               })
             }
-            placeholder="Example: Rs.25,00,000 Applicable Taxes"
+            options={[
+              { label: "India", value: "india" },
+              { label: "Global", value: "global" },
+              { label: "Both", value: "both" },
+            ]}
           />
         </div>
         <div className="w-1/2">
           <InputField
-            label="For Farms"
-            value={state.forFarmsDomesticMarket}
+            label="License Fee"
+            value={state.licenseFee}
             onChange={(value) =>
-              dispatch({
-                type: "SET_FIELD",
-                field: "forFarmsDomesticMarket",
-                value,
-              })
+              dispatch({ type: "SET_FIELD", field: "licenseFee", value })
             }
-            placeholder="25% Rebate On The License Fee For MSME Firms"
+            placeholder="Example: Rs. 1,00,000 + 18% GST (25% rebate for MSME)"
           />
         </div>
       </div>
-      <RoyaltyDropdown
-        fieldLabel="Royalty"
-        label="On Net-Invoice Value"
-        value={state.royaltyType}
-        onChange={(value) =>
-          dispatch({ type: "SET_FIELD", field: "royaltyType", value })
-        }
-        options={[
-          { label: "Net-Invoice Value", value: "net-invoice" },
-          { label: "Gross Revenue", value: "gross-revenue" },
-          { label: "Net Revenue", value: "net-revenue" },
-          { label: "Fixed Amount", value: "fixed-amount" },
-        ]}
-      />
 
-      <SelectDropdown
-        label="Licensing Territory"
-        value={state.licensingTerritory}
-        onChange={(value) =>
-          dispatch({ type: "SET_FIELD", field: "licensingTerritory", value })
-        }
-        options={[
-          { label: "Both", value: "both" },
-          { label: "India Only", value: "india" },
-          { label: "Global Only", value: "global" },
-        ]}
-      />
-
-      <SelectDropdown
-        label="TARGET CUSTOMERS"
-        value={state.targetCustomers}
-        onChange={(value) =>
-          dispatch({ type: "SET_FIELD", field: "targetCustomers", value })
-        }
-        options={[
-          { label: "Startups", value: "startups" },
-          { label: "Farms", value: "farms" },
-        ]}
-      />
+      <div className="flex flex-row gap-4 mb-4">
+        <div className="w-1/2">
+          <SelectDropdown
+            label="Target Customers"
+            value={state.targetCustomers}
+            onChange={(value) =>
+              dispatch({ type: "SET_FIELD", field: "targetCustomers", value })
+            }
+            options={[
+              { label: "Farmers", value: "farmers" },
+              { label: "Orchardists", value: "orchardists" },
+              { label: "Industries", value: "industries" },
+              { label: "Startups", value: "startups" },
+              { label: "MSMEs", value: "msmes" },
+              { label: "MNCs", value: "mncs" },
+              { label: "FPOs and SHGs", value: "fpos_shgs" },
+              { label: "Guava Farmers", value: "guava_farmers" },
+              { label: "Mango Farmers", value: "mango_farmers" },
+            ]}
+          />
+        </div>
+        <div className="w-1/2">
+          <RoyaltyField
+            fieldLabel="Royalty"
+            value={state.royalty}
+            onChange={(value) =>
+              dispatch({ type: "SET_FIELD", field: "royalty", value })
+            }
+          />
+        </div>
+      </div>
       <div className="flex justify-end">
         <Button onClick={handlePublish} className="mt-4">
           Publish

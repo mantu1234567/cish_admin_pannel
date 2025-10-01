@@ -1,77 +1,43 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from "react";
 
-const RoyaltyDropdown = ({ label, value, onChange, options, fieldLabel }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef(null);
-
-  const handleSelect = (selectedValue) => {
-    onChange(selectedValue);
-    setIsOpen(false);
+const RoyaltyField = ({ fieldLabel, value, onChange }) => {
+  const handleChange = (val) => {
+    if (val === "") {
+      onChange("");
+    } else {
+      onChange(val + "%");
+    }
   };
-
-  // Outside click handler
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setIsOpen(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
-
-  const selectedOption = options.find(opt => opt.value === value);
 
   return (
     <div className="mb-4">
-      {/* Field Label (Royalty) */}
+      {/* Field Label */}
       {fieldLabel && (
-        <label className="font-noto font-semibold text-[18px] text-[#000000] leading-[156.5%] mb-1">
+        <label className="font-noto font-semibold text-[18px] text-[#000000] leading-[156.5%] block">
           {fieldLabel}
         </label>
       )}
-      
+
       <div className="flex items-center gap-4">
-        {/* Left side - Dropdown */}
-        <div className="relative" ref={dropdownRef}>
-          <div 
-            className="border border-gray-300 rounded px-4 py-3 w-48 cursor-pointer bg-white flex items-center justify-between"
-            onClick={() => setIsOpen(!isOpen)}
-          >
-            <span className="text-gray-700">
-              {selectedOption ? selectedOption.label : 'Select option'}
-            </span>
-            <div className="flex flex-col items-center">
-              <div className={`w-0 h-0 border-l-4 border-r-4 border-b-4 border-transparent border-b-gray-600 mb-1 transition-transform ${isOpen ? 'rotate-180' : ''}`}></div>
-              <div className={`w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-600 transition-transform ${isOpen ? 'rotate-180' : ''}`}></div>
-            </div>
-          </div>
-          
-          {/* Dropdown menu */}
-          {isOpen && (
-            <div className="absolute top-full left-0 right-0 bg-white border border-gray-300 rounded mt-1 shadow-lg z-10">
-              {options.map((opt) => (
-                <div
-                  key={opt.value}
-                  className="px-4 py-3 hover:bg-gray-100 cursor-pointer border-b border-gray-100 last:border-b-0"
-                  onClick={() => handleSelect(opt.value)}
-                >
-                  {opt.label}
-                </div>
-              ))}
-            </div>
-          )}
+        {/* Numeric Input */}
+        <div className="flex items-center border border-gray-300 rounded px-3 py-2 w-1/4">
+          <input
+            type="number"
+            min="0"
+            max="50"
+            step="0.5"
+            value={value.replace("%", "")}
+            onChange={(e) => handleChange(e.target.value)}
+            className="w-full outline-none text-center"
+          />
+          <span className="ml-1">%</span>
         </div>
 
-        {/* Right side - Label */}
-        <div className="font-noto font-semibold text-[18px] text-[#000000] leading-[156.5%] mb-1">
-          {label}
-        </div>
+        {/* Info Text */}
+        <span className="text-gray-600 text-sm">On Net Sales Invoice</span>
       </div>
     </div>
   );
 };
-export default RoyaltyDropdown;
+
+export default RoyaltyField;
