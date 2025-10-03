@@ -12,6 +12,7 @@ import {
   Settings,
   LifeBuoy,
   LogOut,
+  Users
 } from "lucide-react";
 
 import DashboardPage from "./pages/DashboardPage.jsx";
@@ -29,6 +30,7 @@ import AdminLoginApp from "./components/AdminLogin.jsx";
 import LogoutPage from "./pages/LogoutPage.jsx";
 
 import { useState, useEffect } from "react";
+import StaffPage from "./pages/StaffPage.jsx";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -72,6 +74,7 @@ function App() {
               <SidebarItem icon={<Cpu size={20} />} text="Technologies" to="/technologies" />
               <SidebarItem icon={<Layers size={20} />} text="Varieties" to="/varieties" />
               <SidebarItem icon={<Briefcase size={20} />} text="Jobs & tenders" to="/jobs-tenders" />
+              <SidebarItem icon={<Users size={20} />} text="Staff" to="/staff" />
               <SidebarItem icon={<Calendar size={20} />} text="Events" to="/events" />
               <SidebarItem icon={<HelpCircle size={20} />} text="Queries" to="/queries" />
               <SidebarItem icon={<Megaphone size={20} />} text="Media" to="/media" />
@@ -104,6 +107,7 @@ function App() {
                 <Route path="/settings" element={<SettingsPage />} />
                 <Route path="/help" element={<HelpPage />} />
                 <Route path="/logout" element={<LogoutPage onLogout={handleLogout} />} />
+                <Route path="/staff" element={<StaffPage />} />
               </>
             ) : (
               <Route path="*" element={<Navigate to="/login" replace />} />
