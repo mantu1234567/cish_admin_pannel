@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
+
 function Toast({ message, type = "info", duration = 5000, onClose }) {
-  const [progress, setProgress] = useState(100);
+  const [progress, setProgress] = useState(100); // Start full
 
   useEffect(() => {
     const start = Date.now();
@@ -9,7 +10,7 @@ function Toast({ message, type = "info", duration = 5000, onClose }) {
 
     const update = () => {
       const now = Date.now();
-      const pct = Math.max(0, ((end - now) / duration) * 100);
+      const pct = Math.max(0, 100 - ((now - start) / duration) * 100); // Decrease
       setProgress(pct);
       if (now >= end) {
         onClose();
@@ -22,26 +23,19 @@ function Toast({ message, type = "info", duration = 5000, onClose }) {
     return () => cancelAnimationFrame(rafId);
   }, [duration, onClose]);
 
-  const bgByType = {
-    success: "bg-green-50 border-green-400",
-    error: "bg-red-50 border-red-400",
-    info: "bg-blue-50 border-blue-400",
-    warning: "bg-yellow-50 border-yellow-400",
+  // Gradient colors by type
+  const gradientByType = {
+    success: "bg-gradient-to-r from-green-400 to-green-600",
+    error: "bg-gradient-to-r from-red-400 to-red-600",
+    info: "bg-gradient-to-r from-blue-400 to-blue-600",
+    warning: "bg-gradient-to-r from-yellow-400 to-yellow-600",
   };
 
-  const accentByType = {
-    success: "border-green-500",
-    error: "border-red-500",
-    info: "border-blue-500",
-    warning: "border-yellow-500",
-  };
-
-  const accent = accentByType[type] || accentByType.info;
-  const bg = bgByType[type] || bgByType.info;
+  const gradient = gradientByType[type] || gradientByType.info;
 
   return (
     <div
-      className={`fixed top-4 right-4 w-80 max-w-sm ${bg} border ${accent} shadow-md rounded-lg overflow-hidden ring-1 ring-black/5 z-50`}
+      className={`fixed top-4 right-4 w-80 max-w-sm bg-white border shadow-md rounded-lg overflow-hidden ring-1 ring-black/5 z-50`}
     >
       <div className="p-3 flex justify-between items-center">
         <span className="text-sm text-slate-800">{message}</span>
@@ -52,10 +46,15 @@ function Toast({ message, type = "info", duration = 5000, onClose }) {
           ✕
         </button>
       </div>
-      <div className="h-1 bg-black/5">
-        <div className="h-1 transition-[width] ease-linear" style={{ width: `${progress}%` }} />
+      {/* progress bar */}
+      <div className="h-1 bg-gray-200 overflow-hidden">
+        <div
+          className={`h-1 rounded-full ${gradient} transition-[width] ease-linear ml-auto`}
+          style={{ width: `${progress}%` }}
+        />
       </div>
     </div>
   );
 }
+
 export default Toast;
