@@ -1,4 +1,9 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import Sidebar, { SidebarItem } from "./components/Sidebar";
 import {
   LayoutDashboard,
@@ -12,7 +17,7 @@ import {
   Settings,
   LifeBuoy,
   LogOut,
-  Users
+  Users,
 } from "lucide-react";
 
 import DashboardPage from "./pages/DashboardPage.jsx";
@@ -31,6 +36,8 @@ import LogoutPage from "./pages/LogoutPage.jsx";
 
 import { useState, useEffect } from "react";
 import StaffPage from "./pages/StaffPage.jsx";
+import NewsEventsPage from "./pages/NewsEventsPage.jsx";
+import VKSAPage from "./pages/VKSAPage.jsx";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -68,19 +75,77 @@ function App() {
         {loggedIn && (
           <div className="bg-[#1B5E20]">
             <Sidebar>
-              <SidebarItem icon={<LayoutDashboard size={20} />} text="Dashboard" to="/" />
-              <SidebarItem icon={<Megaphone size={20} />} text="Announcement" to="/announcement" />
-              <SidebarItem icon={<BookOpen size={20} />} text="Research" to="/research" />
-              <SidebarItem icon={<Cpu size={20} />} text="Technologies" to="/technologies" />
-              <SidebarItem icon={<Layers size={20} />} text="Varieties" to="/varieties" />
-              <SidebarItem icon={<Briefcase size={20} />} text="Jobs & tenders" to="/jobs-tenders" />
-              <SidebarItem icon={<Users size={20} />} text="Staff" to="/staff" />
-              <SidebarItem icon={<Calendar size={20} />} text="Events" to="/events" />
-              <SidebarItem icon={<HelpCircle size={20} />} text="Queries" to="/queries" />
-              <SidebarItem icon={<Megaphone size={20} />} text="Media" to="/media" />
-              <SidebarItem icon={<Settings size={20} />} text="Settings" to="/settings" />
-              <SidebarItem icon={<LifeBuoy size={20} />} text="Help" to="/help" />
-              <SidebarItem icon={<LogOut size={20} />} text="Logout" to="/logout" />
+              <SidebarItem
+                icon={<LayoutDashboard size={20} />}
+                text="Home"
+                to="/"
+              />
+              <SidebarItem
+                icon={<Megaphone size={20} />}
+                text="Announcement"
+                to="/announcement"
+              />
+              <SidebarItem
+                icon={<BookOpen size={20} />}
+                text="Research"
+                to="/research"
+              />
+              <SidebarItem
+                icon={<Cpu size={20} />}
+                text="Technologies"
+                to="/technologies"
+              />
+              <SidebarItem
+                icon={<Layers size={20} />}
+                text="Varieties"
+                to="/varieties"
+              />
+              <SidebarItem
+                icon={<Briefcase size={20} />}
+                text="Jobs & tenders"
+                to="/jobs-tenders"
+              />
+              <SidebarItem
+                icon={<Users size={20} />}
+                text="Staff"
+                to="/staff"
+              />
+              <SidebarItem
+                icon={<Calendar size={20} />}
+                text="Events"
+                to="/events"
+              />
+              {/* ✅ New VKSA Item */}
+              <SidebarItem
+                icon={<Calendar size={20} />}
+                text="VKSA"
+                to="/VKSA"
+              />
+              <SidebarItem
+                icon={<HelpCircle size={20} />}
+                text="Queries"
+                to="/queries"
+              />
+              <SidebarItem
+                icon={<Megaphone size={20} />}
+                text="Media"
+                to="/media"
+              />
+              <SidebarItem
+                icon={<Settings size={20} />}
+                text="Settings"
+                to="/settings"
+              />
+              <SidebarItem
+                icon={<LifeBuoy size={20} />}
+                text="Help"
+                to="/help"
+              />
+              <SidebarItem
+                icon={<LogOut size={20} />}
+                text="Logout"
+                to="/logout"
+              />
             </Sidebar>
           </div>
         )}
@@ -90,7 +155,11 @@ function App() {
             <Route
               path="/login"
               element={
-                loggedIn ? <Navigate to="/" replace /> : <AdminLoginApp onLogin={handleLogin} />
+                loggedIn ? (
+                  <Navigate to="/" replace />
+                ) : (
+                  <AdminLoginApp onLogin={handleLogin} />
+                )
               }
             />
             {loggedIn ? (
@@ -101,12 +170,16 @@ function App() {
                 <Route path="/technologies" element={<TechnologiesPage />} />
                 <Route path="/varieties" element={<VarietiesPage />} />
                 <Route path="/jobs-tenders" element={<JobsTendersPage />} />
-                <Route path="/events" element={<EventsPage />} />
+                <Route path="/VKSA" element={<VKSAPage />} />
+                <Route path="/events" element={<NewsEventsPage />} />
                 <Route path="/queries" element={<QueriesPage />} />
                 <Route path="/media" element={<MediaPage />} />
                 <Route path="/settings" element={<SettingsPage />} />
                 <Route path="/help" element={<HelpPage />} />
-                <Route path="/logout" element={<LogoutPage onLogout={handleLogout} />} />
+                <Route
+                  path="/logout"
+                  element={<LogoutPage onLogout={handleLogout} />}
+                />
                 <Route path="/staff" element={<StaffPage />} />
               </>
             ) : (

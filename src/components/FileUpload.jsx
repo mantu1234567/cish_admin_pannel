@@ -24,7 +24,7 @@ const FileUpload = ({ files, onChange }) => {
   return (
     <div className="mb-4">
       <label className="font-noto font-semibold text-[18px] text-[#000000] leading-[156.5%] mb-1">
-        UPLOAD FILES
+        Upload Image
       </label>
       <div
         className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center bg-gray-50"

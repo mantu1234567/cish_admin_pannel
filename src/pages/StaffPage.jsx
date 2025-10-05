@@ -1,7 +1,8 @@
 import { useState } from "react";
-import StaffTab from "./StaffTab";
-import SubStaffTab from "./SubStaffTab";
-import StaffMembersTab from "./StaffMembersTab";
+import Staff from "./Staff";
+import SubStaff from "./SubStaff";
+import StaffMembers from "./StaffMembers";
+import { VarietiesProvider } from "../context/ApiContext";
 
 export default function StaffPage() {
   const [activeTab, setActiveTab] = useState("staff");
@@ -13,33 +14,32 @@ export default function StaffPage() {
   ];
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
-      {/* Tabs */}
-      <div className="flex justify-center mb-8">
-        <div className="inline-flex bg-white shadow-md rounded-lg overflow-hidden">
-          {tabs.map((tab) => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              className={`px-6 py-3 text-sm font-semibold transition-colors duration-300
-                ${
-                  activeTab === tab.id
-                    ? "bg-green-600 text-white"
-                    : "text-gray-700 hover:bg-green-50"
-                }`}
-            >
-              {tab.label}
-            </button>
-          ))}
+    <VarietiesProvider>
+      <div className="min-h-screen">
+        {/* Tabs */}
+        <div className="flex justify-center mb-4 mt-4">
+          <div className="inline-flex bg-white shadow-md overflow-hidden  px-2 py-2">
+            {tabs.map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`px-6 py-3 text-sm font-semibold transition-colors duration-300
+                  ${
+                    activeTab === tab.id
+                      ? "bg-[#1B5E20] text-white"
+                      : "text-gray-700 hover:bg-green-50"
+                  }`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
         </div>
+        {/* Tab Content */}
+          {activeTab === "staff" && <Staff />}
+          {activeTab === "substaff" && <SubStaff />}
+          {activeTab === "members" && <StaffMembers />}
       </div>
-
-      {/* Tab Content */}
-      <div className="bg-white shadow-md rounded-lg p-6">
-        {activeTab === "staff" && <StaffTab />}
-        {activeTab === "substaff" && <SubStaffTab />}
-        {activeTab === "members" && <StaffMembersTab />}
-      </div>
-    </div>
+    </VarietiesProvider>
   );
 }

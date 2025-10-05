@@ -1,15 +1,25 @@
 import React, { createContext, useReducer, useContext } from 'react';
 
 const initialState = {
-  title: '',
-  details: '',
-  licenseFeeGlobal: '',
-  licenseFeeDomestic: '',
-  royalty: '',
-  licensingTerritory: '',
-  targetCustomers: '',
+  title: null,
+  details: null,
+  licenseFeeGlobal: null,
+  licenseFeeDomestic: null,
+  royalty: null,
+  licensingTerritory: null,
+  targetCustomers: null,
   files: [],
+  departement: null,
+  departementName: null,
+  designation: null,
+  icarEmail: null,
+  alternateEmail: null,
+  specialization: null,
+  joiningDate: null,
+  mscFrom: null,
+  phdFrom: null
 };
+
 
 const VarietiesContext = createContext();
 

@@ -97,6 +97,7 @@ const TechnologiesForm = () => {
 
       <InputField
         label="TECHNOLOGIE TITLE"
+        type="text"
         value={state.title}
         onChange={(value) =>
           dispatch({ type: "SET_FIELD", field: "title", value })
@@ -111,6 +112,7 @@ const TechnologiesForm = () => {
         <div className="w-1/2">
           <InputField
             label="Name of Inventor(s)/Developer(s)"
+            type="text"
             value={state.inventors}
             onChange={(value) =>
               dispatch({ type: "SET_FIELD", field: "inventors", value })
@@ -121,6 +123,7 @@ const TechnologiesForm = () => {
         <div className="w-1/2">
           <InputField
             label="Collaborator(s)"
+            type="text"
             value={state.collaborators}
             onChange={(value) =>
               dispatch({ type: "SET_FIELD", field: "collaborators", value })
@@ -134,6 +137,7 @@ const TechnologiesForm = () => {
         <div className="w-1/2">
           <InputField
             label="Maintainer Inventor"
+            type="text"
             value={state.maintainerInventor}
             onChange={(value) =>
               dispatch({
@@ -148,6 +152,7 @@ const TechnologiesForm = () => {
         <div className="w-1/2">
           <InputField
             label="Year of Development"
+            type="text"
             value={state.yearOfDevelopment}
             onChange={(value) =>
               dispatch({ type: "SET_FIELD", field: "yearOfDevelopment", value })
@@ -161,6 +166,7 @@ const TechnologiesForm = () => {
         <div className="w-1/2">
           <InputField
             label="Year of Commercialization"
+            type="text"
             value={state.yearOfCommercialization}
             onChange={(value) =>
               dispatch({
@@ -175,6 +181,7 @@ const TechnologiesForm = () => {
         <div className="w-1/2">
           <InputField
             label="Year of Release"
+            type="text"
             value={state.yearOfRelease}
             onChange={(value) =>
               dispatch({ type: "SET_FIELD", field: "yearOfRelease", value })
@@ -188,6 +195,7 @@ const TechnologiesForm = () => {
         <div className="w-1/2">
           <InputField
             label="PPVFRA Breeder’s right registration"
+            type="text"
             value={state.ppvfraRegistration}
             onChange={(value) =>
               dispatch({
@@ -202,6 +210,7 @@ const TechnologiesForm = () => {
         <div className="w-1/2">
           <InputField
             label="IC No."
+            type="text"
             value={state.icNumber}
             onChange={(value) =>
               dispatch({ type: "SET_FIELD", field: "icNumber", value })
@@ -227,6 +236,7 @@ const TechnologiesForm = () => {
         <div className="w-1/2">
           <InputField
             label="Nature of License"
+            type="text"
             value={state.natureOfLicense}
             onChange={(value) =>
               dispatch({ type: "SET_FIELD", field: "natureOfLicense", value })
@@ -237,6 +247,7 @@ const TechnologiesForm = () => {
         <div className="w-1/2">
           <InputField
             label="Duration"
+            type="text"
             value={state.licenseDuration}
             onChange={(value) =>
               dispatch({ type: "SET_FIELD", field: "licenseDuration", value })
@@ -268,6 +279,7 @@ const TechnologiesForm = () => {
         <div className="w-1/2">
           <InputField
             label="License Fee"
+            type="text"
             value={state.licenseFee}
             onChange={(value) =>
               dispatch({ type: "SET_FIELD", field: "licenseFee", value })

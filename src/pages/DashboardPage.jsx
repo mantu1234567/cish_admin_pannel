@@ -1,19 +1,42 @@
+import { useState } from "react";
+import { VarietiesProvider } from "../context/ApiContext";
+import HomePageBanner from "./HomePageBanner";
+import DirectorDesk from "./DirectorDesk";
 function DashboardPage() {
+  const [activeTab, setActiveTab] = useState("banner");
+
+  const tabs = [
+    { id: "banner", label: "Homepage Banner" },
+    { id: "desk", label: "Director Desk" },
+  ];
+
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gray-100 text-center">
-      <h1 className="text-6xl font-bold text-red-500">404</h1>
-      <p className="text-2xl font-semibold mt-4">Oops! Page not found</p>
-      <p className="text-gray-600 mt-2">
-        The page you are looking for might have been removed, renamed, or is
-        temporarily unavailable.
-      </p>
-      <a
-        href="/"
-        className="mt-6 px-6 py-3 bgs-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition"
-      >
-        Go Back Home
-      </a>
-    </div>
+    <VarietiesProvider>
+      <div className="min-h-screen">
+        {/* Tabs */}
+        <div className="flex justify-center mb-4 mt-4">
+          <div className="inline-flex bg-white shadow-md overflow-hidden  px-2 py-2">
+            {tabs.map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`px-6 py-3 text-sm font-semibold transition-colors duration-300
+                     ${
+                       activeTab === tab.id
+                         ? "bg-[#1B5E20] text-white"
+                         : "text-gray-700 hover:bg-green-50"
+                     }`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
+        </div>
+        {/* Tab Content */}
+        {activeTab === "banner" && <HomePageBanner />}
+        {activeTab === "desk" && <DirectorDesk />}
+      </div>
+    </VarietiesProvider>
   );
 }
 export default DashboardPage;

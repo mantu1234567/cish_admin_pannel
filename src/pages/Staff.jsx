@@ -1,0 +1,86 @@
+import HeaderSection from "../components/HeaderSection";
+import InputField from "../components/InputField";
+import FileUpload from "../components/FileUpload";
+import TextArea from "../components/TextArea";
+
+import { useVarieties } from "../context/ApiContext";
+import Button from "../components/Button";
+import { useApiManager } from "../hooks/useApiManager";
+
+const Staff = () => {
+  const { state, dispatch } = useVarieties();
+  const { createStaffItem } = useApiManager();
+
+  const handlePublish = () => {
+    const payload = { staff: state };
+
+    createStaffItem.mutate(payload, {
+      onSuccess: () => {
+        dispatch({ type: "RESET_FIELDS" });
+        alert("Staff data published successfully!");
+      },
+      onError: (error) => {
+        console.error(error);
+        dispatch({ type: "RESET_FIELDS" });
+        alert("Staff data publish failed!");
+      },
+    });
+  };
+
+  const breadcrumb = [
+    { label: "Home", link: "/" },
+    { label: "Staff", link: "/staff" },
+    { label: "Add Staff" },
+  ];
+
+  const title = "ADD NEW STAFF MEMBER";
+  const description =
+    "Upload staff information including name, image and description. The first uploaded image will be used as a profile thumbnail.";
+
+  return (
+    <div className="mx-auto pl-12 pr-12 pb-24 bg-white">
+      <HeaderSection
+        breadcrumb={breadcrumb}
+        title={title}
+        description={description}
+      />
+
+      {/* Staff Name */}
+      <InputField
+        label="Staff Name"
+        value={state.name}
+        onChange={(value) =>
+          dispatch({ type: "SET_FIELD", field: "name", value })
+        }
+        placeholder="Enter staff name"
+      />
+
+      {/* Staff Image */}
+      <FileUpload
+        files={state.image}
+        onChange={(files) =>
+          dispatch({ type: "SET_FIELD", field: "image", value: files })
+        }
+      />
+
+      {/* Staff Description */}
+      <TextArea
+        label="Staff Description"
+        value={state.description}
+        onChange={(value) =>
+          dispatch({ type: "SET_FIELD", field: "description", value })
+        }
+        placeholder="Enter detailed description"
+      />
+
+      {/* Save Button */}
+      <div className="flex justify-end">
+        <Button onClick={handlePublish} className="mt-4">
+          Publish
+        </Button>
+      </div>
+    </div>
+  );
+};
+
+export default Staff;

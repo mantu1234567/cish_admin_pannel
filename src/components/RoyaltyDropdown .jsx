@@ -26,7 +26,7 @@ const RoyaltyField = ({ fieldLabel, value, onChange }) => {
             min="0"
             max="50"
             step="0.5"
-            value={value.replace("%", "")}
+            value={(value || "").replace("%", "")}
             onChange={(e) => handleChange(e.target.value)}
             className="w-full outline-none text-center"
           />
