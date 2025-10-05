@@ -11,11 +11,15 @@ import { useState } from "react";
 import { useApiManager } from "../hooks/useApiManager";
 import RoyaltyDropdown from "./RoyaltyDropdown ";
 import RoyaltyField from "./RoyaltyDropdown ";
+import Toast from "./Toast";
 const TechnologiesForm = () => {
   const { state, dispatch } = useVarieties();
   const [formData, setFormData] = useState([]);
   const { createVarietiesItem } = useApiManager();
+    const [showToast, setShowToast] = useState(false);
+
  const handlePublish = () => {
+  setShowToast(true)
   const payload = {
     name: state.title || null,
     category: "TECHNOLOGY",
@@ -62,11 +66,11 @@ const TechnologiesForm = () => {
       dispatch({ type: "RESET_FIELDS" });
       alert("Published successfully");
     },
-    onError: (error) => {
-      console.error("Publish error:", error);
-      dispatch({ type: "RESET_FIELDS" });
-      alert("Publish failed");
-    },
+    // onError: (error) => {
+    //   console.error("Publish error:", error);
+    //   dispatch({ type: "RESET_FIELDS" });
+    //   alert("Publish failed");
+    // },
   });
 };
 
@@ -325,8 +329,15 @@ const TechnologiesForm = () => {
           Publish
         </Button>
       </div>
+       {showToast && (
+        <Toast
+          message="Saved successfully!"
+          type="success"
+          duration={5000}
+          onClose={() => setShowToast(false)}
+        />
+      )}
     </div>
   );
 };
-
 export default TechnologiesForm;

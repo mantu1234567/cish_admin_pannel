@@ -5,12 +5,16 @@ import TextArea from "../components/TextArea";
 import { useVarieties } from "../context/ApiContext";
 import Button from "../components/Button";
 import { useApiManager } from "../hooks/useApiManager";
+import Toast from "../components/Toast";
+import { useState } from "react";
 
 const StaffMembers = () => {
   const { state, dispatch } = useVarieties();
   const { createStaffItem } = useApiManager();
+  const [showToast, setShowToast] = useState(false);
 
   const handlePublish = () => {
+    setShowToast(true)
     const payload = { staff: state };
 
     createStaffItem.mutate(payload, {
@@ -18,11 +22,11 @@ const StaffMembers = () => {
         dispatch({ type: "RESET_FIELDS" });
         alert("Staff data published successfully!");
       },
-      onError: (error) => {
-        console.error(error);
-        dispatch({ type: "RESET_FIELDS" });
-        alert("Staff data publish failed!");
-      },
+      // onError: (error) => {
+      //   console.error(error);
+      //   dispatch({ type: "RESET_FIELDS" });
+      //   alert("Staff data publish failed!");
+      // },
     });
   };
 
@@ -149,6 +153,14 @@ const StaffMembers = () => {
           Publish
         </Button>
       </div>
+       {showToast && (
+        <Toast
+          message="Saved successfully!"
+          type="success"
+          duration={5000}
+          onClose={() => setShowToast(false)}
+        />
+      )}
     </div>
   );
 };

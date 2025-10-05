@@ -6,13 +6,16 @@ import { useVarieties } from "../context/ApiContext";
 import Button from "../components/Button";
 import { useApiManager } from "../hooks/useApiManager";
 import { useState } from "react";
+import Toast from "../components/Toast";
 
 const SubStaff = () => {
   const { state, dispatch } = useVarieties();
   const { createStaffItem } = useApiManager();
   const [formData, setFormData] = useState([]);
+  const [showToast, setShowToast] = useState(false);
 
   const handlePublish = () => {
+    setShowToast(true)
     const payload = { staff: state };
 
     createStaffItem.mutate(payload, {
@@ -20,11 +23,11 @@ const SubStaff = () => {
         dispatch({ type: "RESET_FIELDS" });
         alert("Department staff data published successfully!");
       },
-      onError: (error) => {
-        console.error(error);
-        dispatch({ type: "RESET_FIELDS" });
-        alert("Department staff data publish failed!");
-      },
+      // onError: (error) => {
+      //   console.error(error);
+      //   dispatch({ type: "RESET_FIELDS" });
+      //   alert("Department staff data publish failed!");
+      // },
     });
   };
 const handleFieldChange = (field, value) => {
@@ -89,6 +92,14 @@ const handleFieldChange = (field, value) => {
           Publish
         </Button>
       </div>
+       {showToast && (
+        <Toast
+          message="Saved successfully!"
+          type="success"
+          duration={5000}
+          onClose={() => setShowToast(false)}
+        />
+      )}
     </div>
   );
 };

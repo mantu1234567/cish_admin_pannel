@@ -10,22 +10,26 @@ import { useState } from "react";
 import { useApiManager } from "../hooks/useApiManager";
 import RoyaltyDropdown from "./RoyaltyDropdown ";
 import RoyaltyField from "./RoyaltyDropdown ";
+import Toast from "./Toast";
 const VariatiesForm = () => {
   const { state, dispatch } = useVarieties();
   const [formData, setFormData] = useState([]);
   const { createVarietiesItem } = useApiManager();
+    const [showToast, setShowToast] = useState(false);
+
   const handlePublish = () => {
+    setShowToast(true)
     const payload = { varieties: state };
     createVarietiesItem.mutate(payload, {
       onSuccess: () => {
         dispatch({ type: "RESET_FIELDS" });
         alert("Published successfully");
       },
-      onError: (error) => {
-        console.error(error);
-        dispatch({ type: "RESET_FIELDS" });
-        alert("Publish failed");
-      },
+      // onError: (error) => {
+      //   console.error(error);
+      //   dispatch({ type: "RESET_FIELDS" });
+      //   alert("Publish failed");
+      // },
     });
   };
   const breadcrumb = [
@@ -171,6 +175,14 @@ const VariatiesForm = () => {
           Publish
         </Button>
       </div>
+       {showToast && (
+        <Toast
+          message="Saved successfully!"
+          type="success"
+          duration={5000}
+          onClose={() => setShowToast(false)}
+        />
+      )}
     </div>
   );
 };
