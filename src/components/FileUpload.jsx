@@ -153,7 +153,7 @@ const FileUpload = ({ files, onChange }) => {
               Uploaded File Preview
             </h2>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            <div className="">
               {previews.map((file, index) => (
                 <div key={index} className="rounded-md overflow-hidden relative group">
                   {file.type.startsWith("image/") ? (
