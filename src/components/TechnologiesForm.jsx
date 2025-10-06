@@ -5,11 +5,9 @@ import Button from "./Button";
 import FileUpload from "./FileUpload";
 
 import { useVarieties } from "../context/ApiContext";
-import { publishVariety } from "../api/varietiesApi";
 import HeaderSection from "./HeaderSection";
 import { useState } from "react";
 import { useApiManager } from "../hooks/useApiManager";
-import RoyaltyDropdown from "./RoyaltyDropdown ";
 import RoyaltyField from "./RoyaltyDropdown ";
 import Toast from "./Toast";
 const TechnologiesForm = () => {

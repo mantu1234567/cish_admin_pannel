@@ -89,6 +89,30 @@ const VKSAForm = () => {
         title={title}
         description={description}
       />
+        <div className="flex flex-row gap-4">
+        <div className="w-1/2">
+          <InputField
+            label="Viksit Krishi Sankalp Abhiyan Name"
+            type="text"
+            value={state.inventors}
+            onChange={(value) =>
+              dispatch({ type: "SET_FIELD", field: "inventors", value })
+            }
+            placeholder="Enter Viksit Krishi Sankalp Abhiyan Name"
+          />
+        </div>
+        <div className="w-1/2">
+          <InputField
+            label="Viksit Krishi Sankalp Abhiyan Date"
+            type="date"
+            value={state.collaborators}
+            onChange={(value) =>
+              dispatch({ type: "SET_FIELD", field: "collaborators", value })
+            }
+            placeholder="Viksit Krishi Sankalp Abhiyan Date"
+          />
+        </div>
+      </div>
       <TextArea
         label="Viksit Krishi Sankalp Abhiyan Title"
         value={state.details}
@@ -120,3 +144,5 @@ const VKSAForm = () => {
 };
 
 export default VKSAForm;
+
+

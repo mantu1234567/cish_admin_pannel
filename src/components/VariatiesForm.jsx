@@ -32,6 +32,13 @@ const VariatiesForm = () => {
       // },
     });
   };
+   const handleFieldChange = (field, value) => {
+    console.log(field, value);
+    setFormData((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
   const breadcrumb = [
     { label: "Home", link: "/" },
     { label: "Varieties", link: "/varieties" },
