@@ -1,13 +1,13 @@
 import Button from "./Button";
 import { useState, useEffect } from "react";
-import { Eye, X } from "lucide-react";
+import { Eye, X, RefreshCcw } from "lucide-react";
 
 const FileUpload = ({ files, onChange }) => {
   const [previews, setPreviews] = useState([]);
   const [uploadProgress, setUploadProgress] = useState(0);
-  const [showPreview, setShowPreview] = useState(false); // For modal preview
+  const [showPreview, setShowPreview] = useState(false);
   const [uploadDone, setUploadDone] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(null); // For full image view
+  const [selectedImage, setSelectedImage] = useState(null);
 
   useEffect(() => {
     if (files && files.length > 0) {
@@ -18,7 +18,6 @@ const FileUpload = ({ files, onChange }) => {
       }));
       setPreviews(newPreviews);
 
-      // Simulate upload progress
       setUploadProgress(0);
       setUploadDone(false);
       const interval = setInterval(() => {
@@ -61,6 +60,11 @@ const FileUpload = ({ files, onChange }) => {
     onChange(newFiles);
   };
 
+  const handleReupload = () => {
+    onChange([]); // reset files
+    document.getElementById("file-input").click();
+  };
+
   return (
     <div className="mb-6">
       <label className="font-noto font-semibold text-[18px] text-[#000000] mb-2 block">
@@ -72,6 +76,7 @@ const FileUpload = ({ files, onChange }) => {
         onDrop={handleDrop}
         onDragOver={handleDragOver}
       >
+        {/* Upload Section */}
         {!uploadDone ? (
           <>
             <img src="public/upload 1.svg" alt="Upload Icon" className="mx-auto mb-2" />
@@ -97,15 +102,24 @@ const FileUpload = ({ files, onChange }) => {
             />
           </>
         ) : (
-          <div className="flex flex-col items-center justify-center">
+          // After upload done
+          <div className="flex flex-col items-center justify-center gap-3">
             <Eye
               size={48}
               className="text-green-700 hover:text-green-900 cursor-pointer transition-transform duration-200 hover:scale-110"
               onClick={() => setShowPreview(true)}
             />
-            <p className="mt-2 text-sm text-gray-600 font-medium">
+            <p className="text-sm text-gray-600 font-medium">
               View Uploaded File{files.length > 1 ? "s" : ""}
             </p>
+            {/* 🆕 Re-upload button */}
+            <Button
+              variant="outline"
+              onClick={handleReupload}
+              className="flex items-center gap-2 border-green-700 text-green-700 hover:bg-green-100 transition"
+            >
+              <RefreshCcw size={16} /> Re-upload
+            </Button>
           </div>
         )}
 
@@ -125,7 +139,7 @@ const FileUpload = ({ files, onChange }) => {
         </div>
       )}
 
-      {/* Modal for file previews */}
+      {/* File Preview Modal */}
       {showPreview && (
         <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4">
           <div className="relative bg-white rounded-xl shadow-xl p-4 max-w-4xl w-full overflow-y-auto max-h-[90vh]">
@@ -147,7 +161,7 @@ const FileUpload = ({ files, onChange }) => {
                       src={file.url}
                       alt={file.name}
                       className="w-full h-48 object-cover rounded-md cursor-pointer transition-transform duration-200 group-hover:scale-105"
-                      onClick={() => setSelectedImage(file.url)} // 🆕 open full image
+                      onClick={() => setSelectedImage(file.url)}
                     />
                   ) : file.type.startsWith("video/") ? (
                     <video
@@ -175,7 +189,7 @@ const FileUpload = ({ files, onChange }) => {
         </div>
       )}
 
-      {/* Full-screen image view */}
+      {/* Full Image View */}
       {selectedImage && (
         <div
           className="fixed inset-0 bg-black/90 flex items-center justify-center z-[60]"
