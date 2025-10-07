@@ -90,7 +90,7 @@ const TechnologiesForm = () => {
   const description =
     "Upload Your Media. The First Image Will Be Used As The Thumbnail In Feeds. Drag And Drop Up To 3 Image/Video 10 Create A Mutabos";
   return (
-    <div className="mx-auto pl-12 pr-24 py-24 bg-white">
+    <div className="mx-auto pl-12 pr-12 py-24 bg-white">
       <HeaderSection
         breadcrumb={breadcrumb}
         title={title}

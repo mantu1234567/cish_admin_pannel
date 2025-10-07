@@ -9,7 +9,7 @@ export default function StaffPage() {
 
   const tabs = [
     { id: "staff", label: "Staff" },
-    { id: "substaff", label: "Sub Staff" },
+    { id: "substaff", label: "Departement Staff" },
     { id: "members", label: "Staff Members" },
   ];
 
@@ -18,7 +18,7 @@ export default function StaffPage() {
       <div className="min-h-screen">
         {/* Tabs */}
         <div className="flex justify-center mb-4 mt-4">
-          <div className="inline-flex bg-white shadow-md overflow-hidden  px-2 py-2">
+          <div className="inline-flex bg-white shadow-md overflow-hidden">
             {tabs.map((tab) => (
               <button
                 key={tab.id}

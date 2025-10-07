@@ -7,7 +7,7 @@ import HeaderSection from "./HeaderSection";
 import { useState } from "react";
 import { useApiManager } from "../hooks/useApiManager";
 import Toast from "./Toast";
-const NewsEventsForm = () => {
+const AnnouncementForm = () => {
   const { state, dispatch } = useVarieties();
   const [formData, setFormData] = useState([]);
   const { createVarietiesItem } = useApiManager();
@@ -66,21 +66,14 @@ const NewsEventsForm = () => {
     });
   };
 
-  const handleFieldChange = (field, value) => {
-    console.log(field, value);
-    setFormData((prev) => ({
-      ...prev,
-      [field]: value,
-    }));
-  };
-  console.log(formData);
+  
   const breadcrumb = [
     { label: "Home", link: "/" },
-    { label: "News & Events", link: "/news-events" },
-    { label: "Add News & Events" },
+    { label: "Annoucement", link: "/Annoucement" },
+    { label: "Annoucement" },
   ];
 
-  const title = "NEWS AND EVENTS POST";
+  const title = "ANNOUNCEMENT";
   const description = "";
   return (
     <div className="mx-auto pl-12 pr-12 py-24 bg-white">
@@ -90,42 +83,16 @@ const NewsEventsForm = () => {
         description={description}
       />
 
-      <div className="flex flex-row gap-4">
-        <div className="w-1/2">
           <InputField
-            label="News & Events Name"
+            label="Announcement"
             type="text"
             value={state.inventors}
             onChange={(value) =>
               dispatch({ type: "SET_FIELD", field: "inventors", value })
             }
-            placeholder="Enter News & Events name"
+            placeholder="Enter Announcement"
           />
-        </div>
-        <div className="w-1/2">
-          <InputField
-            label="News & Events Date"
-            type="date"
-            value={state.collaborators}
-            onChange={(value) =>
-              dispatch({ type: "SET_FIELD", field: "collaborators", value })
-            }
-            placeholder="Enter News & Events Date"
-          />
-        </div>
-      </div>
-      <TextArea
-        label="News & Events DETAILS"
-        value={state.details}
-        onChange={(value) =>
-          dispatch({ type: "SET_FIELD", field: "details", value })
-        }
-        placeholder="Enter detailed description"
-      />
-      <FileUpload
-        files={formData.files}
-        onChange={(files) => handleFieldChange("files", files)}
-      />
+       
       <div className="flex justify-end">
         <Button onClick={handlePublish} className="mt-4">
           Publish
@@ -143,4 +110,4 @@ const NewsEventsForm = () => {
   );
 };
 
-export default NewsEventsForm;
+export default AnnouncementForm;

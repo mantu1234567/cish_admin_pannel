@@ -37,9 +37,8 @@ const Staff = () => {
     { label: "Add Staff" },
   ];
 
-  const title = "ADD NEW STAFF MEMBER";
-  const description =
-    "Upload staff information including name, image and description. The first uploaded image will be used as a profile thumbnail.";
+  const title = "NEW STAFF MEMBER";
+  const description =""
 
   return (
     <div className="mx-auto pl-12 pr-12 pb-24 bg-white">

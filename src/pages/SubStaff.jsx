@@ -40,12 +40,11 @@ const handleFieldChange = (field, value) => {
   const breadcrumb = [
     { label: "Home", link: "/" },
     { label: "Staff", link: "/staff" },
-    { label: "Add Staff" },
+    { label: "Add Department Staff" },
   ];
 
   const title = "ADD NEW DEPARTMENT STAFF";
-  const description =
-    "Upload staff details including designation, photo and name. The first uploaded photo will be used as a profile thumbnail.";
+  const description =""
 
   return (
     <div className="mx-auto pl-12 pr-12 pb-24 bg-white">

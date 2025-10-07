@@ -9,21 +9,34 @@ import { useState } from "react";
 const HomePageBanner = () => {
   const { state, dispatch } = useVarieties();
   const { createStaffItem } = useApiManager();
-    const [showToast, setShowToast] = useState(false);
-  
+  const [showToast, setShowToast] = useState(false);
+
+  // ✅ Extract image URLs from File objects
+  const getImageUrls = (files) => {
+    if (!files || files.length === 0) return [];
+    return files.map((file) => URL.createObjectURL(file));
+  };
+
   const handlePublish = () => {
-    setShowToast(true)
-    const payload = { staff: state };
+    const imageUrls = getImageUrls(state.image);
+
+    const payload = {
+      images: imageUrls, // ✅ Only URLs in payload
+    };
+
+    console.log("📦 Final Payload:", payload);
+
+    setShowToast(true);
+
     createStaffItem.mutate(payload, {
       onSuccess: () => {
         dispatch({ type: "RESET_FIELDS" });
-        alert("Staff data published successfully!");
+        alert("Banner published successfully!");
       },
-    //   onError: (error) => {
-    //     console.error(error);
-    //     dispatch({ type: "RESET_FIELDS" });
-    //     alert("Staff data publish failed!");
-    //   },
+      onError: (error) => {
+        console.error(error);
+        alert("Banner publish failed!");
+      },
     });
   };
 
@@ -34,30 +47,28 @@ const HomePageBanner = () => {
   ];
 
   const title = "HOME PAGE BANNER";
-  const description =
-    "";
 
   return (
     <div className="mx-auto pl-12 pr-12 pb-24 bg-white">
-      <HeaderSection
-        breadcrumb={breadcrumb}
-        title={title}
-        description={description}
-      />
-      {/* Staff Image */}
+      <HeaderSection breadcrumb={breadcrumb} title={title} description="" />
+
+      {/* Banner Image Upload */}
       <FileUpload
         files={state.image}
         onChange={(files) =>
           dispatch({ type: "SET_FIELD", field: "image", value: files })
         }
       />
-      {/* Save Button */}
+
+      {/* Publish Button */}
       <div className="flex justify-end">
         <Button onClick={handlePublish} className="mt-4">
           Publish
         </Button>
       </div>
-       {showToast && (
+
+      {/* Toast */}
+      {showToast && (
         <Toast
           message="Saved successfully!"
           type="success"

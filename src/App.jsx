@@ -112,15 +112,10 @@ function App() {
               />
               <SidebarItem
                 icon={<Calendar size={20} />}
-                text="Events"
-                to="/events"
+                text="News & Events"
+                to="/news&events"
               />
-              {/* ✅ New VKSA Item */}
-              <SidebarItem
-                icon={<Calendar size={20} />}
-                text="VKSA"
-                to="/VKSA"
-              />
+
               <SidebarItem
                 icon={<HelpCircle size={20} />}
                 text="Queries"
@@ -130,6 +125,11 @@ function App() {
                 icon={<Megaphone size={20} />}
                 text="Media"
                 to="/media"
+              />
+              <SidebarItem
+                icon={<Calendar size={20} />}
+                text="VKSA"
+                to="/VKSA"
               />
               <SidebarItem
                 icon={<Settings size={20} />}
@@ -171,7 +171,7 @@ function App() {
                 <Route path="/varieties" element={<VarietiesPage />} />
                 <Route path="/jobs-tenders" element={<JobsTendersPage />} />
                 <Route path="/VKSA" element={<VKSAPage />} />
-                <Route path="/events" element={<NewsEventsPage />} />
+                <Route path="/news&events" element={<NewsEventsPage />} />
                 <Route path="/queries" element={<QueriesPage />} />
                 <Route path="/media" element={<MediaPage />} />
                 <Route path="/settings" element={<SettingsPage />} />
